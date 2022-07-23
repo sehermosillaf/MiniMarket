@@ -108,6 +108,7 @@ public class ConexionSQL {
     }
     
     public void conectar(){
+        Statement sentenciaSQL = null;
         
   //validaciones para conectar con base de datos
         if(this.getNombreBaseDatos().length() == 0) {
@@ -129,7 +130,7 @@ public class ConexionSQL {
         }  
         try {
             // instancia statement para ejecutar sentencias SQL
-            Statement sentenciaSQL = null;
+            
             
             //Carga el driver antes de conectar a la base de datos
             Class.forName(this.nombreDriver);
@@ -141,6 +142,23 @@ public class ConexionSQL {
         } catch (Exception e) {
             
         }
+        
+        if(this.isEsSelect()) {
+            try {
+                this.setDbResultSet(sentenciaSQL.executeQuery(this.getCadenaSQL()));
+                
+            } catch (Exception e) {
+                
+            } 
+        } 
+//        else {
+//            try {
+//                int insertarFila = sentenciaSQL.executeUpdate(this.getCadenaSQL());
+//                
+//            } catch (Exception e) {
+//                
+//            }
+//        }
     }
 
 }
