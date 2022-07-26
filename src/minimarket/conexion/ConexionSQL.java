@@ -1,20 +1,24 @@
 package minimarket.conexion;
+
 import java.sql.*;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author sebastian
- * @version 
+ * @version 0.1.0 
+ * Ultima modificacion 23/07/2022
  */
 
 /*
  * Clase para generar conexion con bases de datos 
- * siguiendo la documentacion JDBC PostgreSQL https://jdbc.postgresql.org/documentation/81/use.html
- * utiliza metodos de interface Conecction https://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html
- * y metodos de inteface Statement         https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html
-*/
+ * siguiendo la documentacion JDBC PostgreSQL                               https://jdbc.postgresql.org/documentation/81/use.html
+ * utiliza metodos de interface Conecction                                  https://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html
+ * metodos de inteface Statement                                            https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html
+ * Al realizar una consulta a la base de datos devuelve un objeto ResultSet https://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html
+ */
 public class ConexionSQL {
-    
+
     private String nombreBaseDatos;
     private String nombreTabla;
     private String nombreDriver;
@@ -96,69 +100,81 @@ public class ConexionSQL {
     public void setPass(String pass) {
         this.pass = pass;
     }
-    
-    
+
+    //Cierra la conexion con la base de datos
     public void cerrarConexion() {
         try {
             this.getDbConnection().close();
         } catch (Exception e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(null,"La conexion esta cerrada");
+            JOptionPane.showMessageDialog(null, "La conexion esta cerrada");
         }
     }
-    
-    public void conectar(){
+
+    public void conectar() {
+        // instancia statement para ejecutar sentencias SQL
         Statement sentenciaSQL = null;
-        
-  //validaciones para conectar con base de datos
-        if(this.getNombreBaseDatos().length() == 0) {
-            JOptionPane.showMessageDialog(null,"Problemas de conexion");
+
+        //validaciones para conectar con base de datos
+        if (this.getNombreBaseDatos().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Problemas de conexion");
             System.out.println("No existe base de datos");
         }
-        if(this.getNombreTabla().length() == 0) {
-            JOptionPane.showMessageDialog(null,"Problemas de conexion");
+        if (this.getNombreTabla().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Problemas de conexion");
             System.out.println("No existe el nombre de la tabla");
         }
-        if(this.getUsuario().length() == 0) {
-         JOptionPane.showMessageDialog(null,"Problemas de conexion");
+      
+        if (this.getUsuario().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Problemas de conexion");
             System.out.println("No existe usuario en base datos");
         }
-        
-        if(this.getNombreDriver().length() == 0) {
-         JOptionPane.showMessageDialog(null,"Problemas de conexion");
+
+        if (this.getNombreDriver().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Problemas de conexion");
             System.out.println("Problemas al cargar el driver postgresql");
-        }  
+
+        }
+        
+
         try {
-            // instancia statement para ejecutar sentencias SQL
-            
-            
             //Carga el driver antes de conectar a la base de datos
             Class.forName(this.nombreDriver);
             // Fija los datos de conexion 
-            this.setDbConnection(DriverManager.getConnection(this.getNombreBaseDatos(),this.getUsuario(),this.getPass()));
-            
+            this.setDbConnection(DriverManager.getConnection(this.getNombreBaseDatos(), this.getUsuario(), this.getPass()));
+
             sentenciaSQL = this.getDbConnection().createStatement();
-          
+
         } catch (Exception e) {
-            
+            System.out.println(e);
         }
+
+        /*
+         * executeQuery se utiliza para recuperar datos de la base de datos (SELECT).
+         * devuelve un objecto ResultSet
         
-        if(this.isEsSelect()) {
+         * updateQuery se utiliza para instrucciones DML (Insertar, Actualizar y Eliminar)
+         * devuelve un valor int que es el recuento de filas afectadas.
+         */
+        // SELECT
+        if (this.isEsSelect()) {
             try {
                 this.setDbResultSet(sentenciaSQL.executeQuery(this.getCadenaSQL()));
-                
+
             } catch (Exception e) {
+                System.out.println(e);
+
+            }
+        } else { // UPDATE - INSERT - DELETE
+            try {
+                int filasAfectadas = sentenciaSQL.executeUpdate(this.getCadenaSQL());
+
+            } catch (Exception e) {
+                System.out.println(e);
                 
-            } 
-        } 
-//        else {
-//            try {
-//                int insertarFila = sentenciaSQL.executeUpdate(this.getCadenaSQL());
-//                
-//            } catch (Exception e) {
-//                
-//            }
-//        }
+            }
+        }
+        this.cerrarConexion();
     }
 
 }

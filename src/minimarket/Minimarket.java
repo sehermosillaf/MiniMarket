@@ -1,6 +1,7 @@
 
 package minimarket;
 
+import minimarket.conexion.ConexionSQL;
 import minimarket.vistas.Login;
 
 /**
@@ -18,6 +19,7 @@ public class Minimarket {
         
         Login login = new Login();
         login.setVisible(true);
+                   
         
     }
     
