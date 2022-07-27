@@ -7,14 +7,15 @@ import javax.swing.JOptionPane;
  *
  * @author sebastian
  * @version 0.1.0 
- * Ultima modificacion 23/07/2022
+ * Ultima modificacion 27/07/2022
  */
 
 /*
  * Clase para generar conexion con bases de datos 
  * siguiendo la documentacion JDBC PostgreSQL                               https://jdbc.postgresql.org/documentation/81/use.html
- * utiliza metodos de interface Conecction                                  https://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html
- * metodos de inteface Statement                                            https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html
+ * utiliza :
+ * Metodos de interface Conecction                                          https://docs.oracle.com/javase/7/docs/api/java/sql/Connection.html
+ * Metodos de inteface Statement                                            https://docs.oracle.com/javase/7/docs/api/java/sql/Statement.html
  * Al realizar una consulta a la base de datos devuelve un objeto ResultSet https://docs.oracle.com/javase/7/docs/api/java/sql/ResultSet.html
  */
 public class ConexionSQL {
@@ -115,7 +116,7 @@ public class ConexionSQL {
         // instancia statement para ejecutar sentencias SQL
         Statement sentenciaSQL = null;
 
-        //validaciones para conectar con base de datos
+        //Validaciones para conectar con base de datos
         if (this.getNombreBaseDatos().length() == 0) {
             JOptionPane.showMessageDialog(null, "Problemas de conexion");
             System.out.println("No existe base de datos");
@@ -140,7 +141,7 @@ public class ConexionSQL {
         try {
             //Carga el driver antes de conectar a la base de datos
             Class.forName(this.nombreDriver);
-            // Fija los datos de conexion 
+            // Settean los paramentros de conexion 
             this.setDbConnection(DriverManager.getConnection(this.getNombreBaseDatos(), this.getUsuario(), this.getPass()));
 
             sentenciaSQL = this.getDbConnection().createStatement();
@@ -151,9 +152,9 @@ public class ConexionSQL {
 
         /*
          * executeQuery se utiliza para recuperar datos de la base de datos (SELECT).
-         * devuelve un objecto ResultSet
+         * devuelve un objecto ResultSet 
         
-         * updateQuery se utiliza para instrucciones DML (Insertar, Actualizar y Eliminar)
+         * updateQuery se utiliza para el resto de instrucciones DML (Insertar, Actualizar y Eliminar)
          * devuelve un valor int que es el recuento de filas afectadas.
          */
         // SELECT
@@ -170,6 +171,7 @@ public class ConexionSQL {
                 int filasAfectadas = sentenciaSQL.executeUpdate(this.getCadenaSQL());
 
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "");
                 System.out.println(e);
                 
             }

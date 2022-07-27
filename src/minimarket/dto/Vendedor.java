@@ -3,7 +3,8 @@ package minimarket.dto;
 /**
  *
  * @author sebastian
- * @version 
+ * @version 0.2.2
+ * Ultima modificacion 27/07/2022
  */
 public class Vendedor extends Usuario {
 
@@ -35,7 +36,4 @@ public class Vendedor extends Usuario {
         this.nombre = nombre;
     }
  
-    
-   
-
 }

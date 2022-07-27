@@ -7,9 +7,12 @@ import minimarket.dto.Vendedor;
 /**
  *
  * @author sebastian
- * @version 0.1.0
+ * @version 0.2.0
+ * Ultima modificacion 27/07/2022
  * 
+ * Clase donde se implementara el negocio de Vendedor, metodos C.R.U.D 
  * https://www.youtube.com/watch?v=BWwllclt48U&ab_channel=makigas%3Atutorialesdeprogramaci%C3%B3n
+ * 
  */
 public class NegocioVendedor {
     
@@ -56,13 +59,16 @@ public class NegocioVendedor {
                                      + "WHERE id = '" + vendedor.getId() + "';");
     }
     
+    // SELECT * FROM vendedor
     public ArrayList<Vendedor> obtenerVendedores(){
         
-        conexionSQL.getDbResultSet().getString("id");
         
         return null;
-        
-        
+             
     }
+    
+    public ArrayList<Vendedor> obtenerVendedorPorVentas(){
 
+        return null;
+    }
 }
