@@ -3,13 +3,18 @@ package minimarket.dto;
 /**
  *
  * @author sebastian
- * @version 0.2.2
- * Ultima modificacion 27/07/2022
+ * @version 0.2.2 Ultima modificacion 27/07/2022
  */
-public class Vendedor extends Usuario {
+public class Vendedor {
 
-    public Vendedor(int id, String nombre, String username, String password) {
-        super(id, nombre, username, password);
+    private int id;
+    private String rut;
+    private String nombre;
+
+    public Vendedor(int id, String rut, String nombre) {
+        this.id = id;
+        this.rut = rut;
+        this.nombre = nombre;
     }
 
     public int getId() {
@@ -35,5 +40,7 @@ public class Vendedor extends Usuario {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
- 
+    
+    
+
 }

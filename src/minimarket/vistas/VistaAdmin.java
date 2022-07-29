@@ -108,6 +108,9 @@ public class VistaAdmin extends javax.swing.JFrame {
 
     private void btnGestionarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarVendedorActionPerformed
         // TODO add your handling code here:
+        VistaGestionVendedor vistaGestion = new VistaGestionVendedor();
+        vistaGestion.setVisible(true);
+        vistaGestion.setLocationRelativeTo(null);
         
         
     }//GEN-LAST:event_btnGestionarVendedorActionPerformed

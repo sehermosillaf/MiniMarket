@@ -4,6 +4,7 @@
  */
 package minimarket.vistas;
 
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import minimarket.dto.Vendedor;
 import minimarket.negocio.NegocioVendedor;
@@ -17,8 +18,6 @@ public class VistaGestionVendedor extends javax.swing.JFrame {
     /**
      * Creates new form VistaGestionVendedor
      */
-    private Vendedor vendedor;
-    private NegocioVendedor negocioVendedor;
             
     public VistaGestionVendedor() {
         initComponents();
@@ -41,6 +40,8 @@ public class VistaGestionVendedor extends javax.swing.JFrame {
         txtRut = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +71,25 @@ public class VistaGestionVendedor extends javax.swing.JFrame {
         });
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,8 +116,11 @@ public class VistaGestionVendedor extends javax.swing.JFrame {
                                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtRut))))
                         .addGap(94, 94, 94)
-                        .addComponent(btnAgregar)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAgregar)
+                            .addComponent(btnEliminar)
+                            .addComponent(btnModificar))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,11 +133,13 @@ public class VistaGestionVendedor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addComponent(btnSalir)
                 .addGap(61, 61, 61))
@@ -141,16 +166,49 @@ public class VistaGestionVendedor extends javax.swing.JFrame {
                 || this.txtNombre.getText().length() == 0
                 || this.txtRut.getText().length() == 0) {
             
-            JOptionPane.showMessageDialog(null, "Falta");
+            JOptionPane.showMessageDialog(null, "Debe completar todos los campos");
             
+        } else {
+            
+            try {
+                int id = Integer.parseInt(this.txtID.getText().trim());
+                String rut = this.txtNombre.getText().trim();
+                String nombre = this.txtNombre.getText().trim();
+                
+                Vendedor vendedor = new Vendedor(id, rut, nombre);
+                NegocioVendedor negocioVendedor = new NegocioVendedor();
+                
+                negocioVendedor.crearVendedor(vendedor);
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Hubo un error agregando un vendedor");
+                System.out.println(e);
+            }
         }
         
+        
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarActionPerformed
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
