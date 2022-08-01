@@ -4,7 +4,6 @@
  */
 package minimarket.vistas;
 
-import java.util.Vector;
 import javax.swing.JOptionPane;
 import minimarket.dto.Vendedor;
 import minimarket.negocio.NegocioVendedor;
@@ -14,11 +13,7 @@ import minimarket.negocio.NegocioVendedor;
  * @author sebastian
  */
 public class VistaGestionVendedor extends javax.swing.JFrame {
-
-    /**
-     * Creates new form VistaGestionVendedor
-     */
-            
+    
     public VistaGestionVendedor() {
         initComponents();
     }
@@ -162,7 +157,7 @@ public class VistaGestionVendedor extends javax.swing.JFrame {
         //String txtID = this.txtID.getText();
         
         //valida campos vacios en el formulario
-        if(this.txtID.getText().length() == 0
+        if(        this.txtID.getText().length() == 0
                 || this.txtNombre.getText().length() == 0
                 || this.txtRut.getText().length() == 0) {
             
@@ -171,18 +166,25 @@ public class VistaGestionVendedor extends javax.swing.JFrame {
         } else {
             
             try {
+                Vendedor vendedor = new Vendedor();
+                NegocioVendedor negocioVendedor = new NegocioVendedor();
+                
                 int id = Integer.parseInt(this.txtID.getText().trim());
-                String rut = this.txtNombre.getText().trim();
+                String rut = this.txtRut.getText().trim();
                 String nombre = this.txtNombre.getText().trim();
                 
-                Vendedor vendedor = new Vendedor(id, rut, nombre);
-                NegocioVendedor negocioVendedor = new NegocioVendedor();
+                vendedor.setId(id);
+                vendedor.setRut(rut);
+                vendedor.setNombre(nombre);
                 
                 negocioVendedor.crearVendedor(vendedor);
                 
-            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Se ha agregado un vendedor");
+
+                
+            } catch ( Exception e) {
                 JOptionPane.showMessageDialog(null, "Hubo un error agregando un vendedor");
-                System.out.println(e);
+                System.out.println("aqui " + e.getMessage());
             }
         }
         

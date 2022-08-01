@@ -6,8 +6,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author sebastian
- * @version 0.1.0 
- * Ultima modificacion 27/07/2022
+ * @version 0.1.0 Ultima modificacion 27/07/2022
  */
 
 /*
@@ -29,6 +28,21 @@ public class ConexionSQL {
     private ResultSet dbResultSet;
     private String usuario;
     private String pass;
+
+    public ConexionSQL() {
+    }
+
+    public ConexionSQL(String nombreBaseDatos, String nombreTabla, String nombreDriver, String cadenaSQL, boolean esSelect, Connection dbConnection, ResultSet dbResultSet, String usuario, String pass) {
+        this.nombreBaseDatos = nombreBaseDatos;
+        this.nombreTabla = nombreTabla;
+        this.nombreDriver = nombreDriver;
+        this.cadenaSQL = cadenaSQL;
+        this.esSelect = esSelect;
+        this.dbConnection = dbConnection;
+        this.dbResultSet = dbResultSet;
+        this.usuario = usuario;
+        this.pass = pass;
+    }
 
     public String getNombreBaseDatos() {
         return nombreBaseDatos;
@@ -125,7 +139,7 @@ public class ConexionSQL {
             JOptionPane.showMessageDialog(null, "Problemas de conexion");
             System.out.println("No existe el nombre de la tabla");
         }
-      
+
         if (this.getUsuario().length() == 0) {
             JOptionPane.showMessageDialog(null, "Problemas de conexion");
             System.out.println("No existe usuario en base datos");
@@ -136,7 +150,6 @@ public class ConexionSQL {
             System.out.println("Problemas al cargar el driver postgresql");
 
         }
-        
 
         try {
             //Carga el driver antes de conectar a la base de datos
@@ -173,8 +186,9 @@ public class ConexionSQL {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "");
                 System.out.println(e);
-                
+
             }
+
         }
         this.cerrarConexion();
     }

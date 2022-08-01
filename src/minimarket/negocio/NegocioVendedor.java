@@ -11,12 +11,16 @@ import minimarket.dto.Vendedor;
  * Ultima modificacion 27/07/2022
  * 
  * Clase donde se implementara el negocio de Vendedor, metodos C.R.U.D 
- * https://www.youtube.com/watch?v=BWwllclt48U&ab_channel=makigas%3Atutorialesdeprogramaci%C3%B3n
+ * 
  * 
  */
 public class NegocioVendedor {
     
     private ConexionSQL conexionSQL;
+
+    public NegocioVendedor() {
+        ;
+    }
 
     public ConexionSQL getConexionSQL() {
         return conexionSQL;
@@ -27,21 +31,22 @@ public class NegocioVendedor {
     }
     
     public void configurarConexion(){
-        this.conexionSQL.setNombreBaseDatos("jdbc:mysql://localhost/minimarket");
+        this.setConexionSQL(new ConexionSQL());
+        this.conexionSQL.setNombreBaseDatos("jdbc:mysql://localhost:3307/minimarket");
         this.conexionSQL.setNombreTabla("vendedor");
         this.conexionSQL.setNombreDriver("com.mysql.cj.jdbc.Driver");
         this.conexionSQL.setUsuario("root");
         this.conexionSQL.setPass("");
-        this.conexionSQL.conectar();
-    }
+    } // invocar
     
-    public void crearVendedor(Vendedor vendedor){
+    public void crearVendedor(Vendedor vendedor) {
         this.configurarConexion();
-        this.conexionSQL.setEsSelect(false);
         this.conexionSQL.setCadenaSQL("INSERT INTO vendedor (id,rut,nombre) "
                                     + "VALUES ('" + vendedor.getId() + "',"  
                                     + "'" + vendedor.getRut() + "'," 
                                     + "'" + vendedor.getNombre() + "');");
+        this.conexionSQL.setEsSelect(false);
+        this.conexionSQL.conectar();
     }
     
     public void eliminarVendedor(Vendedor vendedor) {
